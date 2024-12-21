@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.ucp_2_b.data.entity.Barang
+import com.example.ucp_2_b.data.entity.Suplier
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,4 +22,7 @@ interface BarangDao {
 
     @Delete
     suspend fun deleteBarang( barang: Barang )
+
+    @Query("SELECT * FROM suplier WHERE nama = :nama")
+    fun getNamaSuplier(nama: String): Flow<Suplier>
 }
