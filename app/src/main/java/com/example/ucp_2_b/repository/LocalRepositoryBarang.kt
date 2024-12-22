@@ -1,6 +1,7 @@
 package com.example.ucp_2_b.repository
 
 import com.example.ucp_2_b.data.dao.BarangDao
+import com.example.ucp_2_b.data.dao.SuplierDao
 import com.example.ucp_2_b.data.entity.Barang
 import com.example.ucp_2_b.data.entity.Suplier
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,10 @@ class LocalRepositoryBarang(
 
     override fun getAllBrg(): Flow<List<Barang>> {
         return barangDao.getAllBarang()
+    }
+
+    override fun getNamaBrg(nama: String): Flow<Barang> {
+        return barangDao.getNamaBarang(nama)
     }
 
     override fun getNamaSpl(nama: String): Flow<Suplier> {

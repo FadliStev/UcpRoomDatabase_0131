@@ -23,6 +23,9 @@ interface BarangDao {
     @Delete
     suspend fun deleteBarang( barang: Barang )
 
+    @Query("SELECT * FROM barang WHERE nama = :nama")
+    fun getNamaBarang(nama: String): Flow<Barang>
+
     @Query("SELECT * FROM suplier WHERE nama = :nama")
     fun getNamaSuplier(nama: String): Flow<Suplier>
 }

@@ -14,5 +14,7 @@ interface RepositoryBarang {
 
     fun getAllBrg(): Flow<List<Barang>>
 
+    fun getNamaBrg(nama: String): Flow<Barang>
+
     fun getNamaSpl(nama: String): Flow<Suplier>
 }
