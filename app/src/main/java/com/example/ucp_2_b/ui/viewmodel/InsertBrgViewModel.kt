@@ -22,7 +22,6 @@ class InsertBrgViewModel(private val repositoryBarang: RepositoryBarang): ViewMo
     private fun validateFields(): Boolean{
         val event = uiStateBrg.barangEvent
         val errorState = BrgFormErrorState(
-            id = if (event.id.isNotEmpty()) null else "Id Tidak Boleh Kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama Tidak Boleh Kosong",
             deskripsi = if (event.deskripsi.isNotEmpty()) null else "Deskripsi Tidak Boleh Kosong",
             harga = if (event.harga.isNotEmpty()) null else "Harga Tidak Boleh Kosong",
@@ -72,7 +71,7 @@ data class BrgUIState(
 )
 
 data class BrgFormErrorState(
-    val id: String? = null,
+    val id: Int? = null,
     val nama: String? = null,
     val deskripsi: String? = null,
     val harga: String? = null,
@@ -100,7 +99,7 @@ fun BarangEvent.toBarangEntity(): Barang = Barang(
 )
 
 data class BarangEvent(
-    val id: String = "",
+    val id: Int = 0,
     val nama: String = "",
     val deskripsi: String = "",
     val harga: String = "",

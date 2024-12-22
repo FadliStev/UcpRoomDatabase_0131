@@ -61,16 +61,16 @@ class DetailBrgViewModel(
 }
 
 data class DetailUiState(
-    val detailUiEvent: BarangEvent = BarangEvent(),
+    val detailUiEvent: BarangEvent = BarangEvent(id = Int.MIN_VALUE),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val errorMessage: String = ""
 ){
     val isUiEventEmpty: Boolean
-        get() = detailUiEvent == BarangEvent()
+        get() = detailUiEvent == BarangEvent(id = Int.MIN_VALUE)
 
     val isUiEventNotEmpty: Boolean
-        get() = detailUiEvent != BarangEvent()
+        get() = detailUiEvent != BarangEvent(id = Int.MIN_VALUE)
 }
 
 fun Barang.toDetailUiEvent(): BarangEvent{

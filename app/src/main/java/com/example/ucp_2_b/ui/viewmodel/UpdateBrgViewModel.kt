@@ -39,7 +39,6 @@ class UpdateBrgViewModel(
     fun validateFields(): Boolean{
         val event = updateUIStateBrg.barangEvent
         val errorState = BrgFormErrorState(
-            id = if (event.id.isNotEmpty()) null else "Id Tidak Boleh Kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama Tidak Boleh Kosong",
             deskripsi = if (event.deskripsi.isNotEmpty()) null else "Deskripsi Tidak Boleh Kosong",
             harga = if (event.harga.isNotEmpty()) null else "Harga Tidak Boleh Kosong",
@@ -60,7 +59,7 @@ class UpdateBrgViewModel(
                     repositoryBarang.updateBrg(currentEvent.toBarangEntity())
                     updateUIStateBrg = updateUIStateBrg.copy(
                         snackbarMessage = "Data Berhasil Diupdate",
-                        barangEvent = BarangEvent(),
+                        barangEvent = BarangEvent(id = Int.MIN_VALUE),
                         isEntrValid = BrgFormErrorState()
                     )
                     println("snackbarMessage diatur: ${updateUIStateBrg.snackbarMessage}")

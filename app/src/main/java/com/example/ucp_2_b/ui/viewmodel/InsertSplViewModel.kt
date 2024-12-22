@@ -22,7 +22,6 @@ class InsertSplViewModel(private val repositorySuplier: RepositorySuplier): View
     private fun validateFields(): Boolean{
         val event = uiStateSpl.suplierEvent
         val errorState = SplFormErrorState(
-            id = if (event.id.isNotEmpty()) null else "Id tidak boleh kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
             kontak = if (event.kontak.isNotEmpty()) null else "Kontak tidak boleh kosong",
             alamat = if (event.alamat.isNotEmpty()) null else "Alamat tidak boleh kosong",
@@ -66,7 +65,7 @@ data class SplUIState(
 )
 
 data class SplFormErrorState(
-    val id: String? = null,
+    val id: Int? = null,
     val nama: String? = null,
     val kontak: String? = null,
     val alamat: String? = null
@@ -87,7 +86,7 @@ fun SuplierEvent.toSuplierEntity(): Suplier = Suplier(
 )
 
 data class SuplierEvent(
-    val id: String = "",
+    val id: Int = 0,
     val nama: String = "",
     val kontak: String = "",
     val alamat: String = ""
