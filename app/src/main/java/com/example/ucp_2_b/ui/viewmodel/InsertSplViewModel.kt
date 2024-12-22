@@ -12,15 +12,15 @@ import kotlinx.coroutines.launch
 
 class InsertSplViewModel(private val repositorySuplier: RepositorySuplier): ViewModel(){
 
-    var uiState by mutableStateOf(SplUIState())
+    var uiStateSpl by mutableStateOf(SplUIState())
     fun updateState(suplierEvent: SuplierEvent){
-        uiState = uiState.copy(
+        uiStateSpl = uiStateSpl.copy(
             suplierEvent = suplierEvent
         )
     }
 
     private fun validateFields(): Boolean{
-        val event = uiState.suplierEvent
+        val event = uiStateSpl.suplierEvent
         val errorState = SplFormErrorState(
             id = if (event.id.isNotEmpty()) null else "Id tidak boleh kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
@@ -29,30 +29,30 @@ class InsertSplViewModel(private val repositorySuplier: RepositorySuplier): View
 
         )
 
-        uiState = uiState.copy(isEntryValid = errorState)
+        uiStateSpl = uiStateSpl.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
 
     fun saveData(){
-        val currentEvent = uiState.suplierEvent
+        val currentEvent = uiStateSpl.suplierEvent
 
         if (validateFields()){
             viewModelScope.launch {
                 try {
                     repositorySuplier.insertSpl(currentEvent.toSuplierEntity())
-                    uiState = uiState.copy(
+                    uiStateSpl = uiStateSpl.copy(
                         snackbarMessage = "Data Berhasil Ditambahkan",
                         suplierEvent = SuplierEvent(),
                         isEntryValid = SplFormErrorState()
                     )
                 } catch (e: Exception){
-                    uiState = uiState.copy(
+                    uiStateSpl = uiStateSpl.copy(
                         snackbarMessage = "Data Gagal Disimpan"
                     )
                 }
             }
         } else{
-            uiState = uiState.copy(
+            uiStateSpl = uiStateSpl.copy(
                 snackbarMessage = "Inputan Salah. Periksa kembali data anda."
             )
         }
