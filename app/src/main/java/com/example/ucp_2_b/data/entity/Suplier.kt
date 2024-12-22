@@ -9,5 +9,5 @@ data class Suplier(
     val id: String,
     val nama: String,
     val kontak: String,
-    val Alamat: String
+    val alamat: String
 )
