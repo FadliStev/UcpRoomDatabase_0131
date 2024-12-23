@@ -56,6 +56,9 @@ class InsertSplViewModel(private val repositorySuplier: RepositorySuplier): View
             )
         }
     }
+    fun resetSnackBarMessage(){
+        uiStateSpl = uiStateSpl.copy(snackbarMessage = null)
+    }
 }
 
 data class SplUIState(
