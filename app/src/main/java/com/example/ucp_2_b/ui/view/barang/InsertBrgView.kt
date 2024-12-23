@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -16,6 +19,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +35,7 @@ import com.example.ucp_2_b.ui.view.suplier.InsertBodySpl
 import com.example.ucp_2_b.ui.viewmodel.BarangEvent
 import com.example.ucp_2_b.ui.viewmodel.BrgFormErrorState
 import com.example.ucp_2_b.ui.viewmodel.BrgUIState
+import com.example.ucp_2_b.ui.viewmodel.HomeSplViewModel
 import com.example.ucp_2_b.ui.viewmodel.InsertBrgViewModel
 import com.example.ucp_2_b.ui.viewmodel.InsertSplViewModel
 import com.example.ucp_2_b.ui.viewmodel.PenyediaViewModel
@@ -126,8 +131,10 @@ fun FormBarang(
     barangEvent: BarangEvent = BarangEvent(),
     onValueChange: (BarangEvent) -> Unit = {},
     errorState: BrgFormErrorState = BrgFormErrorState(),
+    HomeSplViewModel: HomeSplViewModel = viewModel(factory = PenyediaViewModel.Factory),
     modifier: Modifier = Modifier
 ){
+    val supUI by HomeSplViewModel.homeSplUiState.collectAsState()
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -188,20 +195,75 @@ fun FormBarang(
             text = errorState.stok ?: "",
             color = Color.Red
         )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = barangEvent.namaSuplier,
-            onValueChange = {
-                onValueChange(barangEvent.copy(namaSuplier = it))
+        DropDownSup(
+            title = "Pilih Suplier",
+            options = supUI.listSpl.map { it.nama } ,
+            selectedOption = barangEvent.namaSuplier,
+            onOptionSelected = { namaSup ->
+                onValueChange(barangEvent.copy(namaSuplier = namaSup))
+
             },
-            label = { Text("Nama Suplier") },
             isError = errorState.namaSuplier != null,
-            placeholder = { Text("Masukkan Nama Suplier") }
+            errorMessage = errorState.namaSuplier
         )
         Text(
             text = errorState.namaSuplier ?: "",
             color = Color.Red
+            )
+
+    }
+}
+
+@Composable
+fun DropDownSup(
+    title: String,
+    options: List<String>,
+    selectedOption: String,
+    onOptionSelected: (String) -> Unit,
+    isError: Boolean = false,
+    errorMessage: String? = null
+){
+    var expanded by remember { mutableStateOf(false) }
+    var currentSelected by remember { mutableStateOf(selectedOption) }
+
+    Column {
+        OutlinedTextField(
+            value = currentSelected,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = title) },
+            trailingIcon = {
+                androidx.compose.material3.IconButton(onClick = { expanded = !expanded }) {
+                    Icon(
+                        imageVector = if (expanded) Icons.Default.ArrowDropDown else Icons.Default.ArrowDropDown,
+                        contentDescription = null
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
         )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ){
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option) },
+                    onClick = {
+                        onOptionSelected(option)
+                        currentSelected = option
+                        expanded = false
+                    }
+                )
+            }
+        }
+        if (isError && errorMessage != null) {
+            Text(
+                text = errorMessage,
+                color = Color.Red
+            )
+
+        }
     }
 }
 
