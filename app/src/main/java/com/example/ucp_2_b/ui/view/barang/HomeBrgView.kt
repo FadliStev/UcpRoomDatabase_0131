@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeBrgView(
     viewModel: HomeBrgViewModel = viewModel(factory = PenyediaViewModel.Factory),
-    onAddBrg: () -> Unit = {},
+    onBack: () -> Unit = {},
     onDetailClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ){
@@ -62,20 +62,11 @@ fun HomeBrgView(
         topBar = {
             TopAppBar(
                 judul = "Daftar Barang",
-                showBackButton = false,
-                onBack = { }
+                showBackButton = true,
+                onBack = onBack
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddBrg,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(imageVector = Icons.Default.Add,
-                    contentDescription = "Tambah Barang")
-            }
-        }
+
     ){innerPadding ->
         val homeBrgUiState by viewModel.homeBrgUiState.collectAsState()
 

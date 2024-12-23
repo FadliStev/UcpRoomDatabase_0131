@@ -36,15 +36,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.ucp_2_b.data.entity.Barang
 import com.example.ucp_2_b.data.entity.Suplier
 import com.example.ucp_2_b.ui.customwidget.TopAppBar
-import com.example.ucp_2_b.ui.viewmodel.HomeBrgUiState
-import com.example.ucp_2_b.ui.viewmodel.HomeBrgViewModel
 import com.example.ucp_2_b.ui.viewmodel.HomeSplUiState
 import com.example.ucp_2_b.ui.viewmodel.HomeSplViewModel
 import com.example.ucp_2_b.ui.viewmodel.PenyediaViewModel
@@ -54,7 +50,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeSplView(
     viewModel: HomeSplViewModel = viewModel(factory = PenyediaViewModel.Factory),
-    onAddSpl: () -> Unit = {},
+    onBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ){
     Scaffold (
@@ -62,19 +58,9 @@ fun HomeSplView(
         topBar = {
             TopAppBar(
                 judul = "Daftar Suplier",
-                showBackButton = false,
-                onBack = { }
+                showBackButton = true,
+                onBack = onBack
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddSpl,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(imageVector = Icons.Default.Add,
-                    contentDescription = "Tambah Barang")
-            }
         }
     ){innerPadding ->
         val homeSplUiState by viewModel.homeSplUiState.collectAsState()
