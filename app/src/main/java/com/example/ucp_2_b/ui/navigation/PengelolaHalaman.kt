@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.ucp_2_b.ui.view.HomeView
 import com.example.ucp_2_b.ui.view.barang.DetailMhsView
 import com.example.ucp_2_b.ui.view.barang.HomeBrgView
 import com.example.ucp_2_b.ui.view.barang.InsertBrgView
@@ -24,15 +25,34 @@ fun PengelolaHalaman(
 
     NavHost(
         navController = navController,
-        startDestination = DestinasiHomeBrg.route
+        startDestination = DestinasiHome.route
     ){
+        composable(
+            route = DestinasiHome.route
+        ) {
+            HomeView(
+                onNavigateAddBrg = {
+                    navController.navigate(DestinasiInsertBrg.route)
+                },
+                onNavigateAddSup = {
+                    navController.navigate(DestinasiInsertSpl.route)
+                },
+                onNavigateListBrg = {
+                    navController.navigate(DestinasiHomeBrg.route)
+                },
+                onNavigateListSup = {
+                    navController.navigate(DestinasiHomeSpl.route)
+                },
+                modifier = modifier
+            )
+        }
         composable(
             route = DestinasiHomeSpl.route
         ){
 
             HomeSplView(
-                onAddSpl = {
-                    navController.navigate(DestinasiInsertSpl.route)
+                onBack = {
+                    navController.popBackStack()
                 },
                 modifier = modifier
             )
@@ -48,9 +68,9 @@ fun PengelolaHalaman(
                         "PengelolaHalaman: nim = $nama"
                     )
                 },
-                onAddBrg = {
-                    navController.navigate(DestinasiInsertBrg.route)
-                },
+               onBack = {
+                   navController.popBackStack()
+               },
                 modifier = modifier
             )
         }
