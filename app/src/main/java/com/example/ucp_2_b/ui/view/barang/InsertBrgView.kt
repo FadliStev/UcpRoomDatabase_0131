@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -73,7 +74,6 @@ fun InsertBrgView(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
         ) {
             TopAppBar(
                 onBack = onBack,
@@ -105,7 +105,9 @@ fun InsertBodyBrg(
     onClick: () -> Unit
 ){
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(15.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -117,7 +119,8 @@ fun InsertBodyBrg(
         )
         Button(
             onClick = onClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(Color.Blue)
         ) {
             Text("Simpan")
         }
@@ -137,7 +140,9 @@ fun FormBarang(
     val supUI by HomeSplViewModel.homeSplUiState.collectAsState()
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(15.dp)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),

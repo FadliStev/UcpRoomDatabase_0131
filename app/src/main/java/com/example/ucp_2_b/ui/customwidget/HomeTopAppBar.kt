@@ -70,7 +70,9 @@ fun HomeTopAppBar(
 
                     )
                 Text(
-                    text = "Toko Izal Bjir",
+                    text = "Toko Suka Maju",
+                    Modifier
+                        .padding(6.dp),
                     style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White

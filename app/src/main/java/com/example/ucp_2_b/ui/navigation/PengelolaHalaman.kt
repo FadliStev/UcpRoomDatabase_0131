@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ucp_2_b.ui.view.HomeView
-import com.example.ucp_2_b.ui.view.barang.DetailMhsView
+import com.example.ucp_2_b.ui.view.barang.DetailBrgView
 import com.example.ucp_2_b.ui.view.barang.HomeBrgView
 import com.example.ucp_2_b.ui.view.barang.InsertBrgView
 import com.example.ucp_2_b.ui.view.barang.UpdateBrgView
@@ -103,7 +103,7 @@ fun PengelolaHalaman(
         ){
             val nim = it.arguments?.getString(DestinasiDetail.NAMA)
             nim?.let { nama ->
-                DetailMhsView(
+                DetailBrgView(
                     onBack = {
                         navController.popBackStack()
                     },
